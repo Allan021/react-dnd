@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { useStyles } from "./styles";
+import { Footer } from "./components/Footer";
+import { Header } from "./components/Header";
+import { DragAndDropContext } from "./components/DragAndDropContent";
+import { exampleData } from "./data/example";
 
-function App() {
+export default function App() {
+  const classes = useStyles();
+  console.log(exampleData);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <CssBaseline />
+      <Header />
+      <DragAndDropContext />
+      {/* Footer */}
+      <Footer className={classes.footer} />
+      {/* End footer */}
+    </>
   );
 }
-
-export default App;

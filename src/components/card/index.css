@@ -1,0 +1,26 @@
+.puto::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.puto::-webkit-scrollbar:vertical {
+  width: 10px;
+}
+
+.puto::-webkit-scrollbar-button:increment,
+.puto::-webkit-scrollbar-button {
+  display: none;
+}
+
+.puto::-webkit-scrollbar:horizontal {
+  height: 10px;
+}
+
+.puto::-webkit-scrollbar-thumb {
+  background-color: #797979;
+  border-radius: 20px;
+  border: 2px solid #f1f2f3;
+}
+
+.puto::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
