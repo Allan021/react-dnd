@@ -8,7 +8,7 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-around",
     transition: "all .4s ease-in",
-
+    alignItems: "center",
     "&:hover": { backgroundColor: "#ddd" },
     "&:focus": { backgroundColor: "#ddd", border: "2px solid #23292f" },
   },
@@ -17,12 +17,16 @@ export const useStyles = makeStyles((theme) => ({
     border: "2px solid #23292f",
     backgroundColor: "#d5d8da",
   },
+
+  text: {
+    fontSize: 13,
+  },
   cardMedia: {
-    width: 50,
+    width: 45,
     marginRight: 12,
     objectFit: "cover",
     borderRadius: 3,
-    height: 40,
+    height: 30,
     backgroundColor: "white",
     padding: 0.2,
   },

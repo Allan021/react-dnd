@@ -1,58 +1,31 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { DropResult } from "react-beautiful-dnd";
 import { exampleData } from "../data/example";
+import { reorderSingleDrag } from "../utils/dragables";
+import { useSelectedItems } from "./useSelectedItems";
 
 export const useDragAndDrop = () => {
   const [editorsData, setEditorsData] = useState(exampleData);
-  const [selectedStoresIds, setSelectedStoresIds] = useState<number[]>([]);
-  const onWindowClick = useCallback((e) => {
-    if (e.defaultPrevented) {
-      return;
-    }
+  const { selectedStoresIds, setSelectedStoresIds } = useSelectedItems();
+  const [draggableStoreId, setDraggableStoreId] = useState<number | null>(null);
 
-    setSelectedStoresIds([]);
-  }, []);
+  const onDragEnd = useCallback(
+    (result: DropResult) => {
+      const { source, destination } = result;
 
-  /**
-   * On window key down
-   */
-  const onWindowKeyDown = useCallback((e) => {
-    if (e.defaultPrevented) {
-      return;
-    }
-
-    if (e.key === "Escape") {
-      setSelectedStoresIds([]);
-    }
-  }, []);
-
-  const onWindowTouchEnd = useCallback((e) => {
-    if (e.defaultPrevented) {
-      return;
-    }
-
-    setSelectedStoresIds([]);
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("click", onWindowClick);
-    window.addEventListener("keydown", onWindowKeyDown);
-    window.addEventListener("touchend", onWindowTouchEnd);
-
-    return () => {
-      window.removeEventListener("click", onWindowClick);
-      window.removeEventListener("keydown", onWindowKeyDown);
-      window.removeEventListener("touchend", onWindowTouchEnd);
-    };
-  }, [onWindowClick, onWindowKeyDown, onWindowTouchEnd]);
-
-  const onDragEnd = useCallback((result: DropResult) => {}, []);
+      if (!destination || result.reason === "CANCEL") return;
+      reorderSingleDrag({
+        entities: editorsData,
+        selectedStoresIds,
+        source,
+        destination,
+      });
+    },
+    [editorsData, selectedStoresIds]
+  );
 
   return {
     onDragEnd,
-    onWindowClick,
-    onWindowKeyDown,
-    onWindowTouchEnd,
     editorsData,
   };
 };

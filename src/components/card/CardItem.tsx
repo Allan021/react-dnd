@@ -1,4 +1,5 @@
-import { CardMedia, Paper, Typography } from "@material-ui/core";
+import { IconButton, Paper, Typography } from "@material-ui/core";
+import { Close } from "@material-ui/icons";
 import clsx from "clsx";
 import { Draggable } from "react-beautiful-dnd";
 import { Store } from "../../data/example";
@@ -35,7 +36,18 @@ export const CardItem = ({ store, index }: Props) => {
               alt={"imagen"}
               className={classes.cardMedia}
             />
-            <Typography variant="body2">{store.name}</Typography>
+
+            <Typography variant="body2" className={classes.text}>
+              {store.name}
+            </Typography>
+
+            <IconButton color="primary" style={{ padding: 10 }}>
+              <Close
+                color="primary"
+                fontSize="small"
+                style={{ fontSize: 12 }}
+              />
+            </IconButton>
           </Paper>
         </div>
       )}

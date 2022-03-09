@@ -5,7 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 
 import { red } from "@material-ui/core/colors";
-import { Checkbox, FormControlLabel } from "@material-ui/core";
+import { Checkbox, FormControlLabel, Typography } from "@material-ui/core";
 import { Editor } from "../../data/example";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { CardItem } from "./CardItem";
@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
       overflowY: "scroll",
       backgroundColor: "#eee",
       marginTop: 10,
+      padding: "1rem .5rem",
     },
   })
 );
@@ -64,28 +65,35 @@ export const EditorCard = ({ editor, index }: Props) => {
             }
             label="All"
           />
-          <Droppable droppableId={editor.user} type="stores">
-            {(provided, snapshot) => (
-              <CardContent
-                className={clsx("puto", {
-                  [classes.cardContent]: true,
-                })}
-                innerRef={provided.innerRef}
-                {...provided.droppableProps}
-                style={{
-                  maxHeight: 450,
-                  overflowY: "scroll",
-                  backgroundColor: snapshot.isDraggingOver ? "#ddd" : "#eee",
-                }}
-              >
-                {editor.stores.map((store, index) => (
-                  <CardItem store={store} index={index} key={store.pk} />
-                ))}
 
-                {provided.placeholder}
-              </CardContent>
-            )}
-          </Droppable>
+          {editor.stores.length !== 0 ? (
+            <Droppable droppableId={editor.user} type="stores">
+              {(provided, snapshot) => (
+                <CardContent
+                  className={clsx("puto", {
+                    [classes.cardContent]: true,
+                  })}
+                  innerRef={provided.innerRef}
+                  {...provided.droppableProps}
+                  style={{
+                    maxHeight: 450,
+                    overflowY: "scroll",
+                    backgroundColor: snapshot.isDraggingOver ? "#ddd" : "#eee",
+                  }}
+                >
+                  {editor.stores.map((store, index) => (
+                    <CardItem store={store} index={index} key={store.pk} />
+                  ))}
+
+                  {provided.placeholder}
+                </CardContent>
+              )}
+            </Droppable>
+          ) : (
+            <Typography variant="h2" color="initial">
+              SIn Tiendas Asignadas
+            </Typography>
+          )}
         </Card>
       )}
     </Draggable>

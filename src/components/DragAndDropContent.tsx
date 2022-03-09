@@ -14,13 +14,13 @@ export const DragAndDropContext = () => {
   return (
     <main>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Container className={classes.cardGrid} maxWidth="lg">
-          <Droppable
-            droppableId="all-column"
-            direction="horizontal"
-            type="column"
-          >
-            {(provided, snapshot) => (
+        <Droppable
+          droppableId="all-column"
+          direction="horizontal"
+          type="column"
+        >
+          {(provided, snapshot) => (
+            <Container className={classes.cardGrid} maxWidth="lg">
               <Grid
                 container
                 spacing={2}
@@ -38,10 +38,11 @@ export const DragAndDropContext = () => {
                     </Grid>
                   );
                 })}
-              </Grid>
-            )}
-          </Droppable>
-        </Container>
+              </Grid>{" "}
+              {provided.placeholder}
+            </Container>
+          )}
+        </Droppable>
       </DragDropContext>
     </main>
   );
