@@ -15,7 +15,6 @@ export const useSelectedItems = () => {
     if (e.defaultPrevented) {
       return;
     }
-
     if (e.key === "Escape") {
       setSelectedStoresIds([]);
     }
@@ -41,5 +40,8 @@ export const useSelectedItems = () => {
     };
   }, [onWindowClick, onWindowKeyDown, onWindowTouchEnd]);
 
-  return { selectedStoresIds, setSelectedStoresIds };
+  return {
+    selectedStoresIds,
+    setSelectedStoresIds,
+  };
 };

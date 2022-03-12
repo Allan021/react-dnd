@@ -1,19 +1,20 @@
 import { Container, Grid } from "@material-ui/core";
+import { useContext } from "react";
 // import { useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import { useDragAndDrop } from "../hooks/useDragAndDrop";
+import { DragaAndDropContext } from "../contexts/DragaAndDropContext";
 import { useStyles } from "../styles";
 import { EditorCard } from "./card/EditorCard";
 
-export const DragAndDropContext = () => {
+export const DragAndDropContent = () => {
   const classes = useStyles();
 
-  // const [selectedStoresIds, setSelectedStoresId] = useState([]);
+  const { onDragEnd, editorsData, onBeforeCapture } =
+    useContext(DragaAndDropContext);
 
-  const { onDragEnd, editorsData } = useDragAndDrop();
   return (
     <main>
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd} onBeforeCapture={onBeforeCapture}>
         <Droppable
           droppableId="all-column"
           direction="horizontal"

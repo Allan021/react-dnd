@@ -1,16 +1,18 @@
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 
 import { red } from "@material-ui/core/colors";
-import { Checkbox, FormControlLabel, Typography } from "@material-ui/core";
+import { Box, Checkbox, FormControlLabel, Typography } from "@material-ui/core";
 import { Editor } from "../../data/example";
-import { Draggable, Droppable } from "react-beautiful-dnd";
-import { CardItem } from "./CardItem";
+import { Draggable } from "react-beautiful-dnd";
 import "./index.css";
-import clsx from "clsx";
+
+import { useContext, useState } from "react";
+import { DragaAndDropContext } from "../../contexts/DragaAndDropContext";
+import { StoresList } from "./StoresList";
+import { typedMemo } from "../../utils/typedMemo";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -34,9 +36,12 @@ interface Props {
   index: number;
   editor?: Editor;
 }
-export const EditorCard = ({ editor, index }: Props) => {
+const EditorComponent = ({ editor, index }: Props) => {
   const classes = useStyles();
+  const { selectedStoresIds, draggableStoreId, handleSelectAll } =
+    useContext(DragaAndDropContext);
 
+  const [selected, setSelected] = useState<boolean>(false);
   if (!editor) return null;
 
   return (
@@ -58,44 +63,47 @@ export const EditorCard = ({ editor, index }: Props) => {
             subheader="Editor"
             style={{ paddingBottom: 0 }}
           />
-          <FormControlLabel
-            style={{ marginLeft: 3, marginBottom: -10, marginTop: 12 }}
-            control={
-              <Checkbox onChange={() => console.log("Hola")} name="checkedA" />
-            }
-            label="All"
-          />
-
-          {editor.stores.length !== 0 ? (
-            <Droppable droppableId={editor.user} type="stores">
-              {(provided, snapshot) => (
-                <CardContent
-                  className={clsx("puto", {
-                    [classes.cardContent]: true,
-                  })}
-                  innerRef={provided.innerRef}
-                  {...provided.droppableProps}
-                  style={{
-                    maxHeight: 450,
-                    overflowY: "scroll",
-                    backgroundColor: snapshot.isDraggingOver ? "#ddd" : "#eee",
+          <Box
+            display="flex"
+            justifyContent={"space-between"}
+            alignItems="center"
+            style={{ padding: "0 .8rem", marginTop: 10, marginBottom: -8 }}
+          >
+            <FormControlLabel
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              control={
+                <Checkbox
+                  checked={selected}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setSelected(true);
+                    } else {
+                      setSelected(false);
+                    }
+                    handleSelectAll(editor, selected);
                   }}
-                >
-                  {editor.stores.map((store, index) => (
-                    <CardItem store={store} index={index} key={store.pk} />
-                  ))}
-
-                  {provided.placeholder}
-                </CardContent>
-              )}
-            </Droppable>
-          ) : (
-            <Typography variant="h2" color="initial">
-              SIn Tiendas Asignadas
+                  name={editor.user}
+                />
+              }
+              label="All"
+            />
+            <Typography variant="caption" color="initial">
+              Tiendas Asignadas: <b>{editor.stores.length}</b>
             </Typography>
-          )}
+          </Box>
+
+          <StoresList
+            selectedStoresIds={selectedStoresIds}
+            draggableStoreId={draggableStoreId}
+            editor={editor}
+            classes={classes}
+            column={"stores"}
+          />
         </Card>
       )}
     </Draggable>
   );
 };
+export const EditorCard = typedMemo(EditorComponent);

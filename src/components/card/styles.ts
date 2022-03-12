@@ -10,12 +10,6 @@ export const useStyles = makeStyles((theme) => ({
     transition: "all .4s ease-in",
     alignItems: "center",
     "&:hover": { backgroundColor: "#ddd" },
-    "&:focus": { backgroundColor: "#ddd", border: "2px solid #23292f" },
-  },
-
-  cardItemActve: {
-    border: "2px solid #23292f",
-    backgroundColor: "#d5d8da",
   },
 
   text: {

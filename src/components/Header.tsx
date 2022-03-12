@@ -30,6 +30,7 @@ export const Header = () => {
                 href="https://github.com/atlassian/react-beautiful-dnd/"
                 target="_blank"
                 rel="no-openner"
+                onDrop={() => console.log("HOla PAPU")}
               >
                 Ver documentacion Oficial
               </Button>
