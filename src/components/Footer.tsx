@@ -14,7 +14,7 @@ export const Footer = ({ className }: { className: string }) => {
         color="textSecondary"
         component="p"
       >
-        Que te costaba poner esto sachica
+        Practical example with drag and drop
       </Typography>
       <Copyright />
     </footer>
